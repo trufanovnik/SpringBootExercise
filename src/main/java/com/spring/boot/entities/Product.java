@@ -16,12 +16,12 @@ public class Product {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "cost")
-    private int cost;
+    @Column(name = "price")
+    private int price;
 
-    public Product(long id, String title, int cost) {
+    public Product(long id, String title, int price) {
         this.id = id;
         this.title = title;
-        this.cost = cost;
+        this.price = price;
     }
 }
