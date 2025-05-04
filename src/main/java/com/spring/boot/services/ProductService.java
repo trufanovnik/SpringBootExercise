@@ -19,4 +19,9 @@ public class ProductService {
     public void add(Product product){
         productRepository.save(product);
     }
+
+    public Product getProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Товар не найден"));
+    }
 }
