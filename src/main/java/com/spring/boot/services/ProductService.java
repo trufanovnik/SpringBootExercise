@@ -24,4 +24,8 @@ public class ProductService {
         return productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Товар не найден"));
     }
+
+    public void deleteById(Long id){
+        productRepository.deleteById(id);
+    }
 }
