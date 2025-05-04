@@ -5,10 +5,7 @@ import com.spring.boot.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/products")
@@ -28,5 +25,12 @@ public class ProductController {
     public String addProduct(@ModelAttribute(value = "product") Product product){
         productService.add(product);
         return "redirect:/products";
+    }
+
+    @GetMapping("show/{id}")
+    public String showProduct(Model model, @PathVariable(value = "id") Long id){
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
+        return "product-page";
     }
 }
