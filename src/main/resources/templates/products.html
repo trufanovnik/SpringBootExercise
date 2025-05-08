@@ -9,6 +9,36 @@
 </head>
 <body>
 <div class="container">
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Фильтр товаров</h5>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/products}" method="get" class="form-inline">
+                <div class="form-group mr-3">
+                    <label for="title" class="mr-2">Название:</label>
+                    <input type="text" id="title" name="title" th:value="${param.title}"
+                           class="form-control" placeholder="Часть названия">
+                </div>
+
+                <div class="form-group mr-3">
+                    <label for="minPrice" class="mr-2">Цена от:</label>
+                    <input type="number" id="minPrice" name="minPrice" step="1.0"
+                           th:value="${param.minPrice}" class="form-control" placeholder="Мин. цена">
+                </div>
+
+                <div class="form-group mr-3">
+                    <label for="maxPrice" class="mr-2">до:</label>
+                    <input type="number" id="maxPrice" name="maxPrice" step="1.0"
+                           th:value="${param.maxPrice}" class="form-control" placeholder="Макс. цена">
+                </div>
+
+                <button type="submit" class="btn btn-primary mr-2">Применить</button>
+            </form>
+        </div>
+    </div>
+
     <table class="table table-hover">
         <thead>
         <tr>
