@@ -3,9 +3,14 @@ package com.spring.boot.controllers;
 import com.spring.boot.entities.Product;
 import com.spring.boot.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static com.spring.boot.specifications.ProductSpecifications.*;
 
 @Controller
 @RequestMapping("/products")
@@ -14,16 +19,41 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public String showProductsList(Model model){
+    public String showProductsList(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            Model model) {
+
+        Specification<Product> spec = Specification.where(hasTitle(title))
+                .and(hasMinPrice(minPrice))
+                .and(hasMaxPrice(maxPrice));
+
+        List<Product> products = productService.getAllProducts(spec);
+
         Product product = new Product();
         model.addAttribute("product", product);
-        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("products", products);
         return "products";
     }
 
     @PostMapping("/add")
     public String addProduct(@ModelAttribute(value = "product") Product product){
-        productService.add(product);
+        productService.save(product);
+        return "redirect:/products";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editProduct(Model model, @PathVariable(value = "id") Long id){
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
+        return "product-edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateProduct(@PathVariable(value = "id") Long id, @ModelAttribute Product product){
+        product.setId(id);
+        productService.save(product);
         return "redirect:/products";
     }
 

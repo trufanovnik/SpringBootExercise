@@ -50,7 +50,9 @@
         <span th:text="${product.price}">99.9</span>
     </div>
 </div>
-
-<a href="/products" class="back-link">← Back to all products</a>
+<br>
+<a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-warning">Редактировать</a>
+<br>
+<a href="/products" class="back-link">Назад</a>
 </body>
 </html>
