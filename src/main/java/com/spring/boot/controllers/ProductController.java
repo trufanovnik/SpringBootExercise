@@ -37,8 +37,15 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/add")
+    public String showAddProductForm(Model model){
+        Product product = new Product();
+        model.addAttribute(product);
+        return "product-add";
+    }
+
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute(value = "product") Product product){
+    public String addProduct(@ModelAttribute(value = "product")Product product){
         productService.save(product);
         return "redirect:/products";
     }
