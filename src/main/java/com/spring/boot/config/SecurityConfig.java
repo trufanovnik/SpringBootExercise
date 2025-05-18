@@ -38,7 +38,7 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/products"))
                 .exceptionHandling(handling -> handling
-                        .accessDeniedHandler("access-denied"));
+                        .accessDeniedPage("/access-denied"));
         return http.build();
     }
 }
