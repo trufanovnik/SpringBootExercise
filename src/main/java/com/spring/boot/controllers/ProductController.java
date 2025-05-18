@@ -76,4 +76,9 @@ public class ProductController {
         productService.deleteById(id);
         return "redirect:/products";
     }
+
+    @GetMapping("/access-denied")
+    public String accessDenied() {
+        return "access-denied";
+    }
 }

@@ -1,5 +1,6 @@
 package com.spring.boot.config;
 
+import com.spring.boot.config.security.CustomAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,14 +32,17 @@ public class SecurityConfig {
                         .requestMatchers("/products/add").hasAnyRole("ADMIN")
                         .requestMatchers("/products/delete/**").hasAnyRole("ADMIN")
                         .requestMatchers("/products/edit/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/access-denied").permitAll()
                         .anyRequest().permitAll()
                 )
                 .formLogin(Customizer.withDefaults())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/products"))
+//                .exceptionHandling(Customizer.withDefaults()
                 .exceptionHandling(handling -> handling
-                        .accessDeniedPage("/access-denied"));
+                        .accessDeniedHandler(new CustomAccessDeniedHandler())
+                );
         return http.build();
     }
 }
