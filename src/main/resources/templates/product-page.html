@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +52,10 @@
     </div>
 </div>
 <br>
-<a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-warning">Редактировать</a>
+<div sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-warning">Редактировать</a>
+    <br>
+</div>
 <br>
 <a href="/products" class="back-link">Назад</a>
 </body>

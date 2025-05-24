@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8"/>
     <title>Каталог товаров</title>
@@ -9,10 +10,18 @@
 </head>
 <body>
 <div class="container">
-    <a class="btn btn-primary" href="logout" role="button">Logout</a>
-</div>
-<div class="container">
+    <div class="float-right mt-2">
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-primary">Logout</button>
+            </form>
+        </div>
+        <div sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn btn-primary">Login</a>
+        </div>
+    </div>
 
+    <div class="clearfix"></div>
     <div class="card mb-4">
         <div class="card-header">
             <h5>Фильтр товаров</h5>
@@ -68,7 +77,9 @@
         </tbody>
     </table>
     <br>
-    <a th:href="@{'/products/add'}" class="btn btn-info">Добавить</a>
+    <div sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{'/products/add'}" class="btn btn-info">Добавить</a>
+    </div>
 </div>
 </body>
 </html>
