@@ -31,8 +31,6 @@ public class ProductController {
 
         List<Product> products = productService.getAllProducts(spec);
 
-        Product product = new Product();
-        model.addAttribute("product", product);
         model.addAttribute("products", products);
         return "products";
     }
